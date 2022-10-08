@@ -1,0 +1,58 @@
+package spring.pp_3_1_1_springboot.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import spring.pp_3_1_1_springboot.model.User;
+import spring.pp_3_1_1_springboot.service.UserService;
+
+
+@Controller
+public class UserController {
+
+    @Autowired
+    private UserService userService;
+
+    @GetMapping("/")
+    public String showAllUsers(Model model) {
+        model.addAttribute("allUsers", userService.getAllUsers());
+        return "allUsers";
+    }
+
+    @GetMapping("/new")
+    public String addNewUser(@ModelAttribute("user") User user) {
+        return "newUser";
+    }
+
+    @PostMapping()
+    public String saveUser(@ModelAttribute("user") User user) {
+        userService.saveUser(user);
+        return "redirect:/";
+    }
+
+    @GetMapping("/{id}")
+    public String showUser(@PathVariable("id") int id, Model model) {
+        model.addAttribute("user", userService.getUser(id));
+        return "showUser";
+    }
+
+    @GetMapping("/{id}/edit")
+    public String editUser(@PathVariable("id") int id, Model model) {
+        model.addAttribute("user", userService.getUser(id));
+        return "editUser";
+    }
+
+    @PutMapping("/{id}")
+    public String updateUser(@ModelAttribute("user") User user) {
+        userService.updateUser(user);
+        return "redirect:/";
+    }
+
+    @DeleteMapping("/{id}")
+    public String deleteUser(@PathVariable("id") int id) {
+        userService.deleteUser(id);
+        return "redirect:/";
+    }
+
+}
