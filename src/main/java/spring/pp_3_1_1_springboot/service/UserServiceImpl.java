@@ -2,6 +2,7 @@ package spring.pp_3_1_1_springboot.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import spring.pp_3_1_1_springboot.dao.UserRepository;
 import spring.pp_3_1_1_springboot.model.User;
 
@@ -9,6 +10,7 @@ import java.util.List;
 
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
 
     @Autowired
